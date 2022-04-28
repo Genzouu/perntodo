@@ -1,0 +1,12 @@
+{
+   "compilerOptions": {
+      /* Visit https://aka.ms/tsconfig.json to read more about this file */
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "moduleResolution": "node",
+      "sourceMap": true,
+      "outDir": "dist/src"
+   },
+   "lib": ["es2015"]
+}
