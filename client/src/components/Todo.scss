@@ -1,0 +1,53 @@
+.todo {
+   width: 100%;
+   color: var(--main-element-colour);
+   display: flex;
+   font-size: 3rem;
+   text-align: left;
+   border-bottom: 2px solid var(--secondary-element-colour);
+   padding: 1rem 0;
+   align-items: center;
+
+   .body-grid-container {
+      width: 100%;
+      display: grid;
+      grid-template-columns: 3fr 2fr;
+   }
+
+   .time-edit-delete-container {
+      display: flex;
+   }
+
+   .edit-delete-container {
+      display: flex;
+      gap: 1rem;
+      margin-left: auto;
+   }
+
+   .edit,
+   .delete {
+      color: var(--main-element-colour);
+      font-size: 2.6rem;
+      border-radius: 0.2rem;
+      padding: 1rem 2rem;
+      border: none;
+      cursor: pointer;
+      transition: filter 150ms ease-in-out;
+
+      &:hover {
+         filter: brightness(115%);
+      }
+   }
+
+   .edit {
+      background-color: #c7b32a;
+   }
+
+   .delete {
+      background: #b4000f;
+   }
+
+   p {
+      transform: translateY(10%); // better align text vertically
+   }
+}
