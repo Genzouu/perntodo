@@ -10,8 +10,11 @@ app.use(express.json());
 // create a todo item
 app.post("/todos", async (req, res) => {
    try {
-      const { description } = req.body;
-      const newTodo = await pool.query("INSERT INTO todo (description) VALUES($1) RETURNING *", [description]);
+      const { isChecked, description, time } = req.body;
+      const newTodo = await pool.query(
+         "INSERT INTO todo (is_checked, description, time) VALUES($1, $2, $3) RETURNING *",
+         [isChecked, description, time]
+      );
 
       res.json(newTodo.rows[0]);
    } catch (error) {
@@ -46,8 +49,11 @@ app.get("/todos/:id", async (req, res) => {
 app.put("/todos/:id", async (req, res) => {
    try {
       const { id } = req.params;
-      const { description } = req.body;
-      const updateTodo = await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [description, id]);
+      const { isChecked, description, time } = req.body;
+      const updateTodo = await pool.query(
+         "UPDATE todo SET is_checked = $1, description = $2, time = $3 WHERE todo_id = $4",
+         [isChecked, description, time, id]
+      );
 
       res.json("Todo " + id + " was updated!");
    } catch (error) {

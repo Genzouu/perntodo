@@ -1,9 +1,14 @@
 import "./Todo.scss";
 
-export interface TodoProps {
+export interface TodoType {
+   id: number;
    isChecked: boolean;
    description: string;
    time: string;
+}
+
+export interface TodoProps extends TodoType {
+   onDelete: () => {};
 }
 
 export default function Todo(props: TodoProps) {
@@ -16,7 +21,9 @@ export default function Todo(props: TodoProps) {
                <p className="time">{props.time}</p>
                <div className="edit-delete-container">
                   <button className="edit">Edit</button>
-                  <button className="delete">Delete</button>
+                  <button className="delete" onClick={props.onDelete}>
+                     Delete
+                  </button>
                </div>
             </div>
          </div>

@@ -42,4 +42,11 @@
          background-color: #1b1b1b;
       }
    }
+
+   .todos-container {
+      width: 100%;
+      overflow: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+   }
 }
