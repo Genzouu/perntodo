@@ -8,15 +8,17 @@ export default function TodoList() {
 
    async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       try {
-         const time = new Date().getHours();
-         const timeString = time > 12 ? time - 12 + "pm" : time + "am";
+         const date = new Date();
+         const timeString: string = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
          const addedTodo = { isChecked: false, description: "test", time: timeString };
-         const response = await fetch("http://localhost:5000/todos", {
+
+         const response = await fetch("http://localhost:5000/todo-lists/1", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(addedTodo),
          });
-
+         
          getTodos();
       } catch (error) {
          console.log((error as Error).message);
