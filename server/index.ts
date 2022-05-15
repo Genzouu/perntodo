@@ -7,6 +7,38 @@ const app: express.Application = express();
 app.use(cors());
 app.use(express.json());
 
+// add a todo list
+app.post("/todo-lists", async (req, res) => {
+   try {
+      const date = req.body.date;
+
+      const newTodoList = await pool.query(
+         "INSERT INTO todo_list (date) VALUES(TO_DATE($1, 'YYYY/MM/DD')) RETURNING *",
+         [date]
+      );
+
+      res.json(newTodoList.rows[0]);
+   } catch (error) {
+      console.log((error as Error).message);
+   }
+});
+
+// add a todo entry to a todo list
+app.post("/todo-lists/:todoListID", async (req, res) => {
+   try {
+      const todoListID = req.params.todoListID;
+      const { isChecked, description, time } = req.body;
+      const newTodo = await pool.query(
+         "INSERT INTO todo_entry (todo_list_id, is_checked, description, time) VALUES($1, $2, $3, $4) RETURNING *",
+         [todoListID, isChecked, description, time]
+      );
+
+      res.json(newTodo.rows[0]);
+   } catch (error) {
+      console.log((error as Error).message);
+   }
+});
+
 // get todo entry from a todo list
 app.get("/todo-lists/:todoListID/todo-entries/:todoEntryID", async (req, res) => {
    try {
@@ -26,34 +58,6 @@ app.get("/todo-lists/:todoListID", async (req, res) => {
       const todoEntries = await pool.query("SELECT * FROM todo_entry WHERE todo_list_id = $1", [todoListID]);
 
       res.json(todoEntries.rows);
-   } catch (error) {
-      console.log((error as Error).message);
-   }
-});
-
-// add a todo list
-app.post("/todo-lists", async (req, res) => {
-   try {
-      const date = req.body;
-      const newTodoList = await pool.query("INSERT INTO todo_list (date) VALUES($1) RETURNING *", [date]);
-
-      res.json(newTodoList.rows[0]);
-   } catch (error) {
-      console.log((error as Error).message);
-   }
-});
-
-// add a todo entry to a todo list
-app.post("/todo-lists/:todoListID", async (req, res) => {
-   try {
-      const todoListID = req.params.todoListID;
-      const { isChecked, description, time } = req.body;
-      const newTodo = await pool.query(
-         "INSERT INTO todo_entry (todo_list_id, is_checked, description, time) VALUES($1, $2, $3, $4) RETURNING *",
-         [todoListID, isChecked, description, time]
-      );
-
-      res.json(newTodo.rows[0]);
    } catch (error) {
       console.log((error as Error).message);
    }

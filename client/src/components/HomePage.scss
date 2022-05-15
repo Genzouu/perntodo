@@ -1,0 +1,16 @@
+.home-page {
+   width: 100%;
+   color: var(--main-element-colour);
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+
+   .intro {
+      font-size: 6rem;
+   }
+
+   .instructions {
+      font-size: 4rem;
+   }
+}

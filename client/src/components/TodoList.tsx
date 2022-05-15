@@ -6,19 +6,25 @@ import Todo, { TodoType } from "./Todo";
 export default function TodoList() {
    const [todoList, setTodoList] = useState<TodoType[]>([]);
 
+   useEffect(() => {
+      getTodos();
+   }, []);
+
    async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       try {
          const date = new Date();
-         const timeString: string = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+         const timeString: string = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}:${String(
+            date.getSeconds()
+         ).padStart(2, "0")}`;
 
-         const addedTodo = { isChecked: false, description: "test", time: timeString };
+         const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
 
          const response = await fetch("http://localhost:5000/todo-lists/1", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(addedTodo),
          });
-         
+
          getTodos();
       } catch (error) {
          console.log((error as Error).message);
@@ -27,12 +33,17 @@ export default function TodoList() {
 
    async function getTodos() {
       try {
-         const response = await fetch("http://localhost:5000/todos");
-         const jsonData: { todo_id: number; is_checked: boolean; description: string; time: string }[] =
-            await response.json();
+         const response = await fetch("http://localhost:5000/todo-lists/1");
+         const jsonData: {
+            id: number;
+            todo_list_id: number;
+            is_checked: boolean;
+            description: string;
+            time: string;
+         }[] = await response.json();
 
          const newTodoList: TodoType[] = jsonData.map((x) => {
-            return { id: x.todo_id, isChecked: x.is_checked, description: x.description, time: x.time };
+            return { id: x.id, isChecked: x.is_checked, description: x.description, time: x.time };
          });
          setTodoList(newTodoList);
       } catch (error) {
@@ -42,7 +53,7 @@ export default function TodoList() {
 
    async function deleteTodo(id: number) {
       try {
-         const response = await fetch(`http://localhost:5000/todos/${id}`, {
+         const response = await fetch(`http://localhost:5000/todo-lists/1/todo-entries/${id}`, {
             method: "DELETE",
          });
 
@@ -51,10 +62,6 @@ export default function TodoList() {
          console.log((error as Error).message);
       }
    }
-
-   useEffect(() => {
-      getTodos();
-   }, []);
 
    return (
       <div className="todo-list">
