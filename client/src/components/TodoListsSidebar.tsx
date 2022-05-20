@@ -1,10 +1,16 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlinePlus } from "react-icons/ai";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { StateType } from "../redux/reducers";
+import { setSelectedTodoList } from "../redux/slices/selectedTodoListSlice";
 
 import "./TodoListsSidebar.scss";
 
 export default function TodoListsSidebar() {
-   const [todoLists, setTodoLists] = useState<{ date: string }[]>([]);
+   const dispatch = useDispatch();
+
+   const [todoLists, setTodoLists] = useState<{ id: number; date: string }[]>([]);
 
    useEffect(() => {
       getTodoLists();
@@ -35,7 +41,7 @@ export default function TodoListsSidebar() {
          const jsonData: { id: number; date: string }[] = await response.json();
 
          const newTodoLists = jsonData.map((x) => {
-            return { date: x.date };
+            return { id: x.id, date: x.date };
          });
 
          setTodoLists(jsonData);
@@ -57,7 +63,11 @@ export default function TodoListsSidebar() {
          </div>
          <div className="todo-lists-container">
             {todoLists.map((todoList, index) => (
-               <button className="todo-list-icon sidebar-icon" key={index}>
+               <button
+                  className="todo-list-icon sidebar-icon"
+                  onClick={() => dispatch(setSelectedTodoList(todoList.id))}
+                  key={index}
+               >
                   <p className="month-day">{getDateString(todoList.date)[0]}</p>
                   <p className="year">{getDateString(todoList.date)[1]}</p>
                </button>

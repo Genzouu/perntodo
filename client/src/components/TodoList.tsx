@@ -2,8 +2,12 @@ import { useEffect, useState } from "react";
 
 import "./TodoList.scss";
 import Todo, { TodoType } from "./Todo";
+import { useSelector } from "react-redux";
+import { StateType } from "../redux/reducers";
 
 export default function TodoList() {
+   const selectedTodoList = useSelector((state: StateType) => state.selectedTodoList);
+
    const [todoList, setTodoList] = useState<TodoType[]>([]);
 
    useEffect(() => {
@@ -19,7 +23,7 @@ export default function TodoList() {
 
          const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
 
-         const response = await fetch("http://localhost:5000/todo-lists/1", {
+         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(addedTodo),
@@ -33,7 +37,7 @@ export default function TodoList() {
 
    async function getTodos() {
       try {
-         const response = await fetch("http://localhost:5000/todo-lists/1");
+         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList}`);
          const jsonData: {
             id: number;
             todo_list_id: number;
@@ -49,6 +53,8 @@ export default function TodoList() {
       } catch (error) {
          console.log((error as Error).message);
       }
+
+      console.log(selectedTodoList);
    }
 
    async function deleteTodo(id: number) {
