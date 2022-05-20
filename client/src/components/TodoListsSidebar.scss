@@ -1,22 +1,60 @@
 .todo-lists-sidebar {
    min-height: 100%;
    min-width: 8rem;
+   display: flex;
+   flex-direction: column;
    border-right: 4px solid var(--main-element-colour);
 
-   .add-todo-list {
+   .sidebar-icon {
       width: 100%;
-      height: 7rem;
+      min-height: 7rem;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--main-element-colour);
       font-size: 2rem;
-      border-bottom: 2px solid var(--secondary-element-colour);
       cursor: pointer;
       transition: background-color 100ms ease-in-out;
 
       &:hover {
          background-color: #202020;
       }
+   }
+
+   .all-todo-entries {
+      border-bottom: 2px solid var(--secondary-element-colour);
+   }
+
+   .add-todo-list {
+      border-top: 2px solid var(--secondary-element-colour);
+      border-bottom: 2px solid var(--secondary-element-colour);
+   }
+
+   .todo-lists-container {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      margin: 4rem 0;
+      overflow: scroll;
+      overflow-x: hidden;
+      scrollbar-width: none;
+      border-top: 2px solid var(--secondary-element-colour);
+      border-bottom: 2px solid var(--secondary-element-colour);
+   }
+
+   .todo-list-icon {
+      display: flex;
+      flex-direction: column;
+      font-size: 1.6rem;
+      background: none;
+      border: none;
+
+      &:not(:last-child) {
+         border-bottom: 2px solid var(--secondary-element-colour);
+      }
+   }
+
+   .year {
+      font-size: 1.2rem;
    }
 }

@@ -63,6 +63,15 @@ app.get("/todo-lists/:todoListID", async (req, res) => {
    }
 });
 
+app.get("/todo-lists", async (req, res) => {
+   try {
+      const todoLists = await pool.query("SELECT * FROM todo_list");
+      res.json(todoLists.rows);
+   } catch (error) {
+      console.log((error as Error).message);
+   }
+});
+
 // delete a todo entry
 app.delete("/todo-lists/:todoListID/todo-entries/:todoEntryID", async (req, res) => {
    try {
