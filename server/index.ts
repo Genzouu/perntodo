@@ -12,6 +12,7 @@ app.post("/todo-lists", async (req, res) => {
    try {
       const date = req.body.date;
 
+      // store date as string in postgres instead
       const newTodoList = await pool.query(
          "INSERT INTO todo_list (date) VALUES(TO_DATE($1, 'YYYY/MM/DD')) RETURNING *",
          [date]
@@ -63,6 +64,7 @@ app.get("/todo-lists/:todoListID", async (req, res) => {
    }
 });
 
+// get all todo lists
 app.get("/todo-lists", async (req, res) => {
    try {
       const todoLists = await pool.query("SELECT * FROM todo_list");

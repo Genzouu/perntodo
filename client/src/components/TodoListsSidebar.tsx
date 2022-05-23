@@ -1,16 +1,19 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlinePlus } from "react-icons/ai";
-import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import { StateType } from "../redux/reducers";
 import { setSelectedTodoList } from "../redux/slices/selectedTodoListSlice";
 
 import "./TodoListsSidebar.scss";
 
+export interface TodoListType {
+   id: number;
+   date: string;
+}
+
 export default function TodoListsSidebar() {
    const dispatch = useDispatch();
 
-   const [todoLists, setTodoLists] = useState<{ id: number; date: string }[]>([]);
+   const [todoLists, setTodoLists] = useState<TodoListType[]>([]);
 
    useEffect(() => {
       getTodoLists();
@@ -30,6 +33,8 @@ export default function TodoListsSidebar() {
          });
 
          getTodoLists();
+
+         dispatch(setSelectedTodoList(todoLists[todoLists.length - 1]));
       } catch (error) {
          console.log((error as Error).message);
       }
@@ -38,13 +43,13 @@ export default function TodoListsSidebar() {
    async function getTodoLists() {
       try {
          const response = await fetch("http://localhost:5000/todo-lists");
-         const jsonData: { id: number; date: string }[] = await response.json();
+         const jsonData: TodoListType[] = await response.json();
 
          const newTodoLists = jsonData.map((x) => {
             return { id: x.id, date: x.date };
          });
 
-         setTodoLists(jsonData);
+         setTodoLists(newTodoLists);
       } catch (error) {
          console.log((error as Error).message);
       }
@@ -65,7 +70,7 @@ export default function TodoListsSidebar() {
             {todoLists.map((todoList, index) => (
                <button
                   className="todo-list-icon sidebar-icon"
-                  onClick={() => dispatch(setSelectedTodoList(todoList.id))}
+                  onClick={() => dispatch(setSelectedTodoList(todoList))}
                   key={index}
                >
                   <p className="month-day">{getDateString(todoList.date)[0]}</p>

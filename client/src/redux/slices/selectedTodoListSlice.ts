@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { TodoListType } from "../../components/TodoListsSidebar";
 
 const selectedTodoListSlice = createSlice({
    name: "selectedTodoList",
-   initialState: -1,
+   initialState: { id: -1, date: "" },
    reducers: {
-      setSelectedTodoList: (state, action: PayloadAction<number>) => {
-         state = action.payload;
+      setSelectedTodoList: (state, action: PayloadAction<TodoListType>) => {
+         return (state = action.payload);
       },
    },
 });

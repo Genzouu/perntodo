@@ -4,6 +4,7 @@ import "./TodoList.scss";
 import Todo, { TodoType } from "./Todo";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/reducers";
+import { getFormattedDateString } from "../helper/dateStringHelper";
 
 export default function TodoList() {
    const selectedTodoList = useSelector((state: StateType) => state.selectedTodoList);
@@ -12,7 +13,7 @@ export default function TodoList() {
 
    useEffect(() => {
       getTodos();
-   }, []);
+   }, [selectedTodoList]);
 
    async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
       try {
@@ -23,7 +24,7 @@ export default function TodoList() {
 
          const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
 
-         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList}`, {
+         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList.id}`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(addedTodo),
@@ -37,7 +38,7 @@ export default function TodoList() {
 
    async function getTodos() {
       try {
-         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList}`);
+         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList.id}`);
          const jsonData: {
             id: number;
             todo_list_id: number;
@@ -49,12 +50,11 @@ export default function TodoList() {
          const newTodoList: TodoType[] = jsonData.map((x) => {
             return { id: x.id, isChecked: x.is_checked, description: x.description, time: x.time };
          });
+
          setTodoList(newTodoList);
       } catch (error) {
          console.log((error as Error).message);
       }
-
-      console.log(selectedTodoList);
    }
 
    async function deleteTodo(id: number) {
@@ -72,7 +72,7 @@ export default function TodoList() {
    return (
       <div className="todo-list">
          <h1 className="title">Title</h1>
-         <h2 className="date">{new Date().toDateString()}</h2>
+         <h2 className="date">{getFormattedDateString(selectedTodoList.date)}</h2>
          <div className="line-break-thick"></div>
          <div className="sub-titles">
             <p className="description">Description</p>
