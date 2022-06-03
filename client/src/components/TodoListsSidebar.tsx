@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AiOutlineMenu, AiOutlinePlus } from "react-icons/ai";
 import { useDispatch } from "react-redux";
+import { getDateString } from "../helper/dateStringHelper";
 import { setSelectedTodoList } from "../redux/slices/selectedTodoListSlice";
 
 import "./TodoListsSidebar.scss";
@@ -55,12 +56,6 @@ export default function TodoListsSidebar() {
       }
    }
 
-   function getDateString(postgresDate: string): string[] {
-      const dateSections = postgresDate.slice(0, 10).split("-"); // get each section
-      let newDateString = dateSections[2] + "/" + dateSections[1];
-      return [newDateString, dateSections[0]]; // return ["DD-MM", "YYYY"];
-   }
-
    return (
       <div className="todo-lists-sidebar">
          <div className="all-todo-entries sidebar-icon" onClick={() => getTodoLists()}>
@@ -73,8 +68,8 @@ export default function TodoListsSidebar() {
                   onClick={() => dispatch(setSelectedTodoList(todoList))}
                   key={index}
                >
-                  <p className="month-day">{getDateString(todoList.date)[0]}</p>
-                  <p className="year">{getDateString(todoList.date)[1]}</p>
+                  <p className="month-day">{getDateString(todoList.date)[0] + "/" + getDateString(todoList.date)[1]}</p>
+                  <p className="year">{getDateString(todoList.date)[2]}</p>
                </button>
             ))}
          </div>

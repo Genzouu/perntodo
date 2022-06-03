@@ -1,17 +1,9 @@
-.add-task-model {
-   width: 70%;
-   min-height: fit-content;
+.add-todo-entry-modal {
    font-size: 3rem;
-   color: var(--main-element-colour);
-   background-color: var(--main-background-colour);
-   border-radius: 2rem;
    display: flex;
    flex-direction: column;
-   align-self: center;
    align-items: center;
    justify-content: center;
-   margin: 0 auto;
-   padding: 4rem;
    gap: 2rem;
 
    .description-text-area {
@@ -34,8 +26,8 @@
    }
 
    .description-container {
-      width: 100%;
-      min-height: 12rem;
+      width: 80%;
+      min-height: 4rem;
    }
 
    .start-time-container,
@@ -45,7 +37,7 @@
    }
 
    .add-task {
-      width: 20%;
+      width: 40%;
       font-size: 3rem;
       margin-top: 4rem;
       padding: 1rem 2rem;

@@ -1,0 +1,27 @@
+.modal {
+   width: fit-content;
+   min-height: fit-content;
+   color: var(--main-element-colour);
+   background-color: var(--main-background-colour);
+   border-radius: 2rem;
+   position: relative;
+   margin: 0 auto;
+   padding: 4rem 8rem;
+   z-index: 100;
+
+   .close-modal {
+      width: 6rem;
+      height: 6rem;
+      position: absolute;
+      top: 2rem;
+      right: 2rem;
+      padding: 1rem;
+      border-radius: 100%;
+      transition: background-color 100ms ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+         background-color: #1f1f1f;
+      }
+   }
+}

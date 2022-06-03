@@ -15,4 +15,4 @@ export const modalStateSlice = createSlice({
    },
 });
 
-const { toggleAddTodoEntryModal, toggleAddTodoListModal } = modalStateSlice.actions;
+export const { toggleAddTodoEntryModal, toggleAddTodoListModal } = modalStateSlice.actions;

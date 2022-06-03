@@ -13,8 +13,9 @@ export interface TodoProps extends TodoType {
 
 export default function Todo(props: TodoProps) {
    function getTimeString(postgresTimeString: string) {
-      let sections = postgresTimeString.replace(/[\[\]]/g, "").split(","); // replace square brackets then split into sections
-      sections = sections.map((x) => x.slice(0, 5)); // get only the HH:MM sections
+      let sections = postgresTimeString.split("-"); // split into sections
+
+      console.log(sections[0] + " - " + sections[1]);
       return sections[0] + " - " + sections[1];
    }
 

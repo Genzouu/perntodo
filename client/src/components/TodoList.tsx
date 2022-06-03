@@ -1,40 +1,22 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import "./TodoList.scss";
 import Todo, { TodoType } from "./Todo";
-import { useSelector } from "react-redux";
 import { StateType } from "../redux/reducers";
 import { getFormattedDateString } from "../helper/dateStringHelper";
+import { setTodoEntries } from "../redux/slices/currentTodoEntriesSlice";
+import { toggleAddTodoEntryModal } from "../redux/slices/modalStateSlice";
 
 export default function TodoList() {
+   const dispatch = useDispatch();
    const selectedTodoList = useSelector((state: StateType) => state.selectedTodoList);
-
-   const [todoList, setTodoList] = useState<TodoType[]>([]);
+   const currentTodoEntries = useSelector((state: StateType) => state.currentTodoEntries);
 
    useEffect(() => {
       getTodos();
    }, [selectedTodoList]);
-
-   // async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-   //    try {
-   //       const date = new Date();
-   //       const timeString: string = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}:${String(
-   //          date.getSeconds()
-   //       ).padStart(2, "0")}`;
-
-   //       const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
-
-   //       const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList.id}`, {
-   //          method: "POST",
-   //          headers: { "Content-Type": "application/json" },
-   //          body: JSON.stringify(addedTodo),
-   //       });
-
-   //       getTodos();
-   //    } catch (error) {
-   //       console.log((error as Error).message);
-   //    }
-   // }
 
    async function getTodos() {
       try {
@@ -51,7 +33,7 @@ export default function TodoList() {
             return { id: x.id, isChecked: x.is_checked, description: x.description, time: x.time };
          });
 
-         setTodoList(newTodoList);
+         dispatch(setTodoEntries(newTodoList));
       } catch (error) {
          console.log((error as Error).message);
       }
@@ -63,7 +45,7 @@ export default function TodoList() {
             method: "DELETE",
          });
 
-         setTodoList(todoList.filter((x) => x.id !== id));
+         dispatch(setTodoEntries(currentTodoEntries.filter((x) => x.id !== id)));
       } catch (error) {
          console.log((error as Error).message);
       }
@@ -79,9 +61,11 @@ export default function TodoList() {
             <p className="time">Time</p>
          </div>
          <div className="line-break-thick"></div>
-         <button className="add-task">+ Add Task</button>
+         <button className="add-task" onClick={() => dispatch(toggleAddTodoEntryModal())}>
+            + Add Task
+         </button>
          <div className="todos-container">
-            {todoList.map((todo, index) => (
+            {currentTodoEntries.map((todo, index) => (
                <Todo
                   id={todo.id}
                   isChecked={todo.isChecked}

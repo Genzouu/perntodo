@@ -1,10 +1,20 @@
+import { useSelector } from "react-redux";
+
 import "./Overlay.scss";
-import AddTaskModel from "./AddTaskModel";
+import ModalBase from "./ModalBase";
+import { StateType } from "../redux/reducers";
+import AddTodoEntryModal from "./AddTodoEntryModal";
 
 export default function Overlay() {
+   const modalStates = useSelector((state: StateType) => state.modalState);
+
    return (
-      <div className="overlay">
-         <AddTaskModel />
-      </div>
+      <>
+         {modalStates.addTodoEntryModalState || modalStates.addTodoListModalState ? (
+            <div className="overlay">
+               <ModalBase children={modalStates.addTodoEntryModalState ? <AddTodoEntryModal /> : <></>} />
+            </div>
+         ) : null}
+      </>
    );
 }
