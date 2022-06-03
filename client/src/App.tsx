@@ -7,8 +7,6 @@ import TodoListsSidebar from "./components/TodoListsSidebar";
 import { StateType } from "./redux/reducers";
 
 function App() {
-   const modalStates = useSelector((state: StateType) => state.modalState);
-
    return (
       <div className="App">
          <Overlay />
