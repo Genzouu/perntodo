@@ -1,14 +1,14 @@
 import "./App.scss";
 import HomePage from "./components/HomePage";
+import Overlay from "./components/Overlay";
 import TodoList from "./components/TodoList";
-import TodoListsPanel from "./components/TodoListsSidebar";
-
-// install redux to get the currently selected list
+import TodoListsSidebar from "./components/TodoListsSidebar";
 
 function App() {
    return (
       <div className="App">
-         <TodoListsPanel />
+         <Overlay />
+         <TodoListsSidebar />
          {/* <HomePage /> */}
          <TodoList />
       </div>

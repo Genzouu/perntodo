@@ -1,0 +1,56 @@
+.add-task-model {
+   width: 70%;
+   min-height: fit-content;
+   font-size: 3rem;
+   color: var(--main-element-colour);
+   background-color: var(--main-background-colour);
+   border-radius: 2rem;
+   display: flex;
+   flex-direction: column;
+   align-self: center;
+   align-items: center;
+   justify-content: center;
+   margin: 0 auto;
+   padding: 4rem;
+   gap: 2rem;
+
+   .description-text-area {
+      width: 100%;
+      font-size: 3rem;
+      resize: none;
+   }
+
+   .description-container,
+   .time-container {
+      display: flex;
+   }
+
+   .description-container {
+      gap: 1rem;
+   }
+
+   .time-container {
+      gap: 4rem;
+   }
+
+   .description-container {
+      width: 100%;
+      min-height: 12rem;
+   }
+
+   .start-time-container,
+   .end-time-container {
+      display: flex;
+      gap: 1rem;
+   }
+
+   .add-task {
+      width: 20%;
+      font-size: 3rem;
+      margin-top: 4rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 1rem;
+      cursor: pointer;
+   }
+}

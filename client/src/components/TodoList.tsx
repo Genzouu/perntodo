@@ -15,26 +15,26 @@ export default function TodoList() {
       getTodos();
    }, [selectedTodoList]);
 
-   async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
-      try {
-         const date = new Date();
-         const timeString: string = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}:${String(
-            date.getSeconds()
-         ).padStart(2, "0")}`;
+   // async function addTodo(e: React.MouseEvent<HTMLButtonElement, MouseEvent>) {
+   //    try {
+   //       const date = new Date();
+   //       const timeString: string = `${date.getHours()}:${String(date.getMinutes()).padStart(2, "0")}:${String(
+   //          date.getSeconds()
+   //       ).padStart(2, "0")}`;
 
-         const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
+   //       const addedTodo = { isChecked: false, description: "test", time: "[" + timeString + ", " + timeString + "]" };
 
-         const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList.id}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(addedTodo),
-         });
+   //       const response = await fetch(`http://localhost:5000/todo-lists/${selectedTodoList.id}`, {
+   //          method: "POST",
+   //          headers: { "Content-Type": "application/json" },
+   //          body: JSON.stringify(addedTodo),
+   //       });
 
-         getTodos();
-      } catch (error) {
-         console.log((error as Error).message);
-      }
-   }
+   //       getTodos();
+   //    } catch (error) {
+   //       console.log((error as Error).message);
+   //    }
+   // }
 
    async function getTodos() {
       try {
@@ -79,9 +79,7 @@ export default function TodoList() {
             <p className="time">Time</p>
          </div>
          <div className="line-break-thick"></div>
-         <button className="add-task" onClick={(e) => addTodo(e)}>
-            + Add Task
-         </button>
+         <button className="add-task">+ Add Task</button>
          <div className="todos-container">
             {todoList.map((todo, index) => (
                <Todo

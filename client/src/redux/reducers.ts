@@ -1,8 +1,12 @@
 import { combineReducers } from "@reduxjs/toolkit";
-import { selectedTodoListReducer } from "./slices/selectedTodoListSlice";
+import { currentTodoEntriesSlice } from "./slices/currentTodoEntriesSlice";
+import { modalStateSlice } from "./slices/modalStateSlice";
+import { selectedTodoListSlice } from "./slices/selectedTodoListSlice";
 
 const reducers = combineReducers({
-   selectedTodoList: selectedTodoListReducer,
+   selectedTodoList: selectedTodoListSlice.reducer,
+   currentTodoEntries: currentTodoEntriesSlice.reducer,
+   modalState: modalStateSlice.reducer,
 });
 
 export default reducers;
