@@ -39,7 +39,7 @@
       overflow-x: hidden;
       scrollbar-width: none;
       border-top: 2px solid var(--secondary-element-colour);
-      border-bottom: 2px solid var(--secondary-element-colour);
+      // border-bottom: 2px solid var(--secondary-element-colour);
    }
 
    .todo-list-icon {
@@ -49,12 +49,25 @@
       background: none;
       border: none;
 
-      &:not(:last-child) {
-         border-bottom: 2px solid var(--secondary-element-colour);
-      }
+      // &:not(:last-child) {
+      //    border-bottom: 2px solid var(--secondary-element-colour);
+      // }
    }
 
    .year {
       font-size: 1.2rem;
+   }
+
+   .delete-todo-list {
+      border: none;
+      outline: none;
+      background-color: #b4000f;
+      border-bottom: 2px solid var(--secondary-element-colour);
+      transition: background-color 100ms ease-in-out;
+      cursor: pointer;
+
+      &:hover {
+         background-color: #d40012;
+      }
    }
 }

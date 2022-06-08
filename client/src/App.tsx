@@ -1,10 +1,7 @@
-import { useSelector } from "react-redux";
 import "./App.scss";
-import HomePage from "./components/HomePage";
 import Overlay from "./components/Overlay";
 import TodoList from "./components/TodoList";
 import TodoListsSidebar from "./components/TodoListsSidebar";
-import { StateType } from "./redux/reducers";
 
 function App() {
    return (

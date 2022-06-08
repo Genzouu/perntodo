@@ -1,4 +1,9 @@
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+
 import "./Todo.scss";
+import { StateType } from "../redux/reducers";
+import { setTodoEntries } from "../redux/slices/currentTodoEntriesSlice";
 
 export interface TodoType {
    id: number;
@@ -7,11 +12,22 @@ export interface TodoType {
    time: string;
 }
 
-export interface TodoProps extends TodoType {
-   onDelete: () => {};
-}
+export default function Todo(props: TodoType) {
+   const dispatch = useDispatch();
+   const currentTodoEntries = useSelector((state: StateType) => state.currentTodoEntries);
 
-export default function Todo(props: TodoProps) {
+   async function deleteTodo() {
+      try {
+         const response = await fetch(`http://localhost:5000/todo-lists/1/todo-entries/${props.id}`, {
+            method: "DELETE",
+         });
+
+         dispatch(setTodoEntries(currentTodoEntries.filter((x) => x.id !== props.id)));
+      } catch (error) {
+         console.log((error as Error).message);
+      }
+   }
+
    function getTimeString(postgresTimeString: string) {
       let sections = postgresTimeString.split("-"); // split into sections
 
@@ -28,7 +44,7 @@ export default function Todo(props: TodoProps) {
                <p className="time">{getTimeString(props.time)}</p>
                <div className="edit-delete-container">
                   <button className="edit">Edit</button>
-                  <button className="delete" onClick={props.onDelete}>
+                  <button className="delete" onClick={() => deleteTodo()}>
                      Delete
                   </button>
                </div>

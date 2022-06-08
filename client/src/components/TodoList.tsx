@@ -39,17 +39,7 @@ export default function TodoList() {
       }
    }
 
-   async function deleteTodo(id: number) {
-      try {
-         const response = await fetch(`http://localhost:5000/todo-lists/1/todo-entries/${id}`, {
-            method: "DELETE",
-         });
-
-         dispatch(setTodoEntries(currentTodoEntries.filter((x) => x.id !== id)));
-      } catch (error) {
-         console.log((error as Error).message);
-      }
-   }
+   
 
    return (
       <div className="todo-list">
@@ -71,7 +61,6 @@ export default function TodoList() {
                   isChecked={todo.isChecked}
                   description={todo.description}
                   time={todo.time}
-                  onDelete={() => deleteTodo(todo.id)}
                   key={index}
                />
             ))}
