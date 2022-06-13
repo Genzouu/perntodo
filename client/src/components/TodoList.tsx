@@ -9,6 +9,12 @@ import { getFormattedDateString } from "../helper/dateStringHelper";
 import { setTodoEntries } from "../redux/slices/currentTodoEntriesSlice";
 import { toggleAddTodoEntryModal } from "../redux/slices/modalStateSlice";
 
+export interface TodoListType {
+   id: number;
+   title: string;
+   date: string;
+}
+
 export default function TodoList() {
    const dispatch = useDispatch();
    const selectedTodoList = useSelector((state: StateType) => state.selectedTodoList);
@@ -38,8 +44,6 @@ export default function TodoList() {
          console.log((error as Error).message);
       }
    }
-
-   
 
    return (
       <div className="todo-list">

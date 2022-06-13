@@ -61,6 +61,7 @@
    .delete-todo-list {
       border: none;
       outline: none;
+      width: 100%;
       background-color: #b4000f;
       border-bottom: 2px solid var(--secondary-element-colour);
       transition: background-color 100ms ease-in-out;

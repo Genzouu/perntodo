@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { TodoListType } from "../../components/TodoListsSidebar";
+import { TodoListType } from "../../components/TodoList";
 
 export const selectedTodoListSlice = createSlice({
    name: "selectedTodoList",

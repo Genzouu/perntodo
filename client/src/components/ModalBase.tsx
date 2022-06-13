@@ -2,11 +2,11 @@ import { useDispatch } from "react-redux";
 import { MdClose } from "react-icons/md";
 
 import "./ModalBase.scss";
-import { toggleAddTodoEntryModal } from "../redux/slices/modalStateSlice";
 import { ReactElement } from "react";
 
 interface ModalProps {
-   children?: ReactElement;
+   children: ReactElement;
+   closeModal: () => void;
 }
 
 export default function AddTaskModel(props: ModalProps) {
@@ -15,7 +15,7 @@ export default function AddTaskModel(props: ModalProps) {
    return (
       <div className="modal">
          {props.children}
-         <MdClose className="close-modal" onClick={() => dispatch(toggleAddTodoEntryModal())} />
+         <MdClose className="close-modal" onClick={props.closeModal} />
       </div>
    );
 }
